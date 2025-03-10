@@ -40,6 +40,14 @@ require('lazy').setup({
     end
     },
 
+    -- markdown preview
+    {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = function() vim.fn["mkdp#util#install"]() end,
+    },
+
     -- FILE tree
     {
     "nvim-tree/nvim-tree.lua",
