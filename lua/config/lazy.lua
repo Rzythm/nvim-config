@@ -106,7 +106,7 @@ require('lazy').setup({
                 },
                 cursorword = {
                     enable = true,
-                    min_length = 3,  -- 高亮单词最小长度
+                    min_length = 3,            -- 高亮单词最小长度
                     hl = { underline = true }, -- 下划线效果
                 },
             })
@@ -120,6 +120,12 @@ require('lazy').setup({
         config = function()
             local lspconfig = require("lspconfig")
 
+            -- 配置 clangd LSP
+            require 'lspconfig'.clangd.setup {
+                cmd = { "clangd" },                                                 -- 使用 clangd 命令
+                filetypes = { "c", "cpp", "objc", "objcpp" },                       -- 支持 C/C++/Objective-C
+                root_dir = require 'lspconfig'.util.root_pattern("compile_commands.json", ".git"), -- 查找项目根目录
+            }
             -- 配置 Go LSP (gopls)
             lspconfig.gopls.setup({
                 cmd = { "gopls" }, -- 使用安装的 gopls
@@ -141,9 +147,9 @@ require('lazy').setup({
                 cmd = { "lua-language-server" },
                 settings = {
                     Lua = {
-                        diagnostics = { globals = { "vim" } },           -- 让 Lua LSP 识别 `vim` 全局变量
+                        diagnostics = { globals = { "vim" } },                             -- 让 Lua LSP 识别 `vim` 全局变量
                         workspace = { library = vim.api.nvim_get_runtime_file("", true) }, -- 配置 Neovim 相关的 Lua 库
-                        telemetry = { enable = false },                  -- 禁用遥测数据收集
+                        telemetry = { enable = false },                                    -- 禁用遥测数据收集
                     },
                 },
             })
@@ -152,11 +158,11 @@ require('lazy').setup({
 
     -- nvim-cmp
     {
-        "hrsh7th/nvim-cmp",       -- 主自动补全插件
+        "hrsh7th/nvim-cmp",             -- 主自动补全插件
         dependencies = {
-            "hrsh7th/cmp-nvim-lsp", -- LSP 补全源
-            "hrsh7th/cmp-buffer", -- 缓冲区补全源
-            "hrsh7th/cmp-path",   -- 路径补全源
+            "hrsh7th/cmp-nvim-lsp",     -- LSP 补全源
+            "hrsh7th/cmp-buffer",       -- 缓冲区补全源
+            "hrsh7th/cmp-path",         -- 路径补全源
             "saadparwaiz1/cmp_luasnip", -- Snippet 补全源
         },
         config = function()
@@ -185,6 +191,15 @@ require('lazy').setup({
             })
         end
     },
+    -- nvim-autopairs 插件
+    {
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    config = true
+    -- use opts = {} for passing setup options
+    -- this is equivalent to setup({}) function
+    },
+   
     -- Mason 插件，用于安装和管理 LSP 服务器
     {
         "williamboman/mason.nvim",
