@@ -141,7 +141,15 @@ require('lazy').setup({
                     }
                 },
             })
-            --          end
+             -- 配置 rust-analyzer
+            lspconfig.rust_analyzer.setup({
+                settings = {
+                    ["rust-analyzer"] = {
+                        cargo = { allFeatures = true },
+                        checkOnSave = { command = "clippy" },
+                    }
+                }
+            })
             -- 配置 Lua LSP (sumneko_lua)
             lspconfig.lua_ls.setup({
                 cmd = { "lua-language-server" },

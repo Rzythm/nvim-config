@@ -28,3 +28,5 @@ vim.api.nvim_set_keymap('n', '<Tab><Left>', ':tabprev<CR>', { noremap = true, si
 -- 切换到下一个标签页
 vim.api.nvim_set_keymap('n', '<Tab><Right>', ':tabnext<CR>', { noremap = true, silent = true })
 
+-- 下方分屏并打开终端
+vim.keymap.set("n", "<leader>t", ":botright 10split | terminal<CR>i", { noremap = true, silent = true })
