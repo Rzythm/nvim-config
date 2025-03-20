@@ -30,3 +30,7 @@ vim.api.nvim_set_keymap('n', '<Tab><Right>', ':tabnext<CR>', { noremap = true, s
 
 -- 下方分屏并打开终端
 vim.keymap.set("n", "<leader>t", ":botright 10split | terminal<CR>i", { noremap = true, silent = true })
+
+-- esc退出终端模式
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
+

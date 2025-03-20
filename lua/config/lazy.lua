@@ -122,8 +122,8 @@ require('lazy').setup({
 
             -- 配置 clangd LSP
             require 'lspconfig'.clangd.setup {
-                cmd = { "clangd" },                                                 -- 使用 clangd 命令
-                filetypes = { "c", "cpp", "objc", "objcpp" },                       -- 支持 C/C++/Objective-C
+                cmd = { "clangd" },                                                                -- 使用 clangd 命令
+                filetypes = { "c", "cpp", "objc", "objcpp" },                                      -- 支持 C/C++/Objective-C
                 root_dir = require 'lspconfig'.util.root_pattern("compile_commands.json", ".git"), -- 查找项目根目录
             }
             -- 配置 Go LSP (gopls)
@@ -141,7 +141,7 @@ require('lazy').setup({
                     }
                 },
             })
-             -- 配置 rust-analyzer
+            -- 配置 rust-analyzer
             lspconfig.rust_analyzer.setup({
                 settings = {
                     ["rust-analyzer"] = {
@@ -182,13 +182,10 @@ require('lazy').setup({
                     end,
                 },
                 mapping = {
-                    ['<C-p>'] = cmp.mapping.select_prev_item(),
-                    ['<C-n>'] = cmp.mapping.select_next_item(),
-                    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                    ['<C-e>'] = cmp.mapping.abort(),
-                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                    ["<Down>"] = cmp.mapping.select_next_item(), -- 向下选择补全项
+                    ["<Up>"] = cmp.mapping.select_prev_item(), -- 向上选择补全项
+                    ["<Tab>"] = cmp.mapping.confirm({ select = true }), -- Tab 确认补全
+                    ["<C-e>"] = cmp.mapping.abort(),        -- Ctrl+e 关闭补全菜单
                 },
                 sources = {
                     { name = 'nvim_lsp' },
@@ -201,13 +198,13 @@ require('lazy').setup({
     },
     -- nvim-autopairs 插件
     {
-    'windwp/nvim-autopairs',
-    event = "InsertEnter",
-    config = true
-    -- use opts = {} for passing setup options
-    -- this is equivalent to setup({}) function
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        config = true
+        -- use opts = {} for passing setup options
+        -- this is equivalent to setup({}) function
     },
-   
+
     -- Mason 插件，用于安装和管理 LSP 服务器
     {
         "williamboman/mason.nvim",
