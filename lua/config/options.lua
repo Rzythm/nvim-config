@@ -14,3 +14,6 @@ vim.opt.expandtab = true -- 将 Tab 键转换为空格
 vim.opt.autoindent = true
 vim.opt.smartindent = true
 
+vim.opt.clipboard = "unnamedplus" -- 让普通的 y 复制到系统剪贴板
+
+vim.opt.foldenable = false

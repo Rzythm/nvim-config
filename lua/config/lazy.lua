@@ -15,6 +15,54 @@ vim.opt.rtp:prepend(lazypath)
 vim.opt.termguicolors = true -- 启用 24 位真彩色，必须开启以支持主题
 
 require('lazy').setup({
+    -- Codeium
+    {
+        "Exafunction/codeium.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "hrsh7th/nvim-cmp",
+        },
+        config = function()
+            require("codeium").setup({
+            })
+        end
+    },
+    -- Treesitter 配置
+    {
+        "nvim-treesitter/nvim-treesitter",
+        priority = 1000,
+        build = ":TSUpdate", -- 自动更新 Treesitter 解析器
+        event = { "BufReadPost", "BufNewFile" },
+        config = function()
+            require("nvim-treesitter.configs").setup {
+                ensure_installed = { "lua", "cpp", "go", "python", "html", "rust" },
+                highlight = { enable = false },
+                indent = { enable = true },
+                fold = { enable = true },
+            }
+            vim.o.foldmethod = "expr"
+            vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+        end,
+    },
+    -- leetcode
+    {
+        "kawre/leetcode.nvim",
+        build = ":TSUpdate html", -- if you have `nvim-treesitter` installed
+        dependencies = {
+            "nvim-telescope/telescope.nvim",
+            -- "ibhagwan/fzf-lua",
+            "nvim-lua/plenary.nvim",
+            "MunifTanjim/nui.nvim",
+        },
+        opts = {
+            cn = {     -- leetcode.cn
+                enabled = true, ---@type boolean
+                translator = true, ---@type boolean
+                translate_problems = true, ---@type boolean
+            },
+            -- configuration goes here
+        },
+    },
     -- theme setup
     {
         "catppuccin/nvim",
@@ -30,15 +78,15 @@ require('lazy').setup({
         tag = '0.1.8',
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
-    -- auto-session
-    {
-        'rmagatti/auto-session',
-        lazy = false,
-        opts = {
-            suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
-            -- log_level = 'debug',
-        }
-    },
+    -- -- auto-session
+    -- {
+    --     'rmagatti/auto-session',
+    --     lazy = false,
+    --     opts = {
+    --         suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
+    --         -- log_level = 'debug',
+    --     }
+    -- },
     -- markdown preview
     {
         "iamcco/markdown-preview.nvim",
@@ -182,10 +230,10 @@ require('lazy').setup({
                     end,
                 },
                 mapping = {
-                    ["<Down>"] = cmp.mapping.select_next_item(), -- 向下选择补全项
-                    ["<Up>"] = cmp.mapping.select_prev_item(), -- 向上选择补全项
+                    ["<Down>"] = cmp.mapping.select_next_item(),        -- 向下选择补全项
+                    ["<Up>"] = cmp.mapping.select_prev_item(),          -- 向上选择补全项
                     ["<Tab>"] = cmp.mapping.confirm({ select = true }), -- Tab 确认补全
-                    ["<C-e>"] = cmp.mapping.abort(),        -- Ctrl+e 关闭补全菜单
+                    ["<C-e>"] = cmp.mapping.abort(),                    -- Ctrl+e 关闭补全菜单
                 },
                 sources = {
                     { name = 'nvim_lsp' },

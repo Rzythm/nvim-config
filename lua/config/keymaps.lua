@@ -34,3 +34,12 @@ vim.keymap.set("n", "<leader>t", ":botright 10split | terminal<CR>i", { noremap 
 -- esc退出终端模式
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true, silent = true })
 
+vim.keymap.set("n", "<leader>q", ":bd!<CR>", { noremap = true, silent = true })
+
+local opts = { noremap = true, silent = true }
+
+-- Leader + ' 绑定为 :Leet run
+vim.keymap.set("n", "<Leader>'", ":Leet run<CR>", opts)
+
+-- Leader + Enter 绑定为 :Leet submit
+vim.keymap.set("n", "<Leader><CR>", ":Leet submit<CR>", opts)
