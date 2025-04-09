@@ -18,12 +18,4 @@ vim.keymap.set("n", "<leader>fmd", vim.lsp.buf.format)
 -- markdown preview
 vim.keymap.set("n", "<leader>mp", ":MarkdownPreviewToggle<cr>")
 
-
--- 设置跳转到定义的快捷键
-vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
-
--- 设置跳转到声明的快捷键
-vim.api.nvim_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', { noremap = true, silent = true })
-
--- 设置查看悬停信息的快捷键
-vim.api.nvim_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>ts', '<cmd>Telescope treesitter parsers<CR>')

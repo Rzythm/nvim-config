@@ -15,39 +15,42 @@ vim.opt.rtp:prepend(lazypath)
 vim.opt.termguicolors = true -- 启用 24 位真彩色，必须开启以支持主题
 
 require('lazy').setup({
-    -- Codeium
-    {
-        "Exafunction/codeium.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "hrsh7th/nvim-cmp",
-        },
-        config = function()
-            require("codeium").setup({
-            })
-        end
-    },
-    -- Treesitter 配置
+    -- nvim-treesitter
     {
         "nvim-treesitter/nvim-treesitter",
-        priority = 1000,
-        build = ":TSUpdate", -- 自动更新 Treesitter 解析器
-        event = { "BufReadPost", "BufNewFile" },
+        build = ":TSUpdate",
+        event = "VeryLazy",
         config = function()
-            require("nvim-treesitter.configs").setup {
-                ensure_installed = { "lua", "cpp", "go", "python", "html", "rust" },
-                highlight = { enable = false },
+            -- 设置全局变量禁用旧模块
+            vim.g.skip_ts_context_commentstring_module = true
+
+            require("nvim-treesitter.configs").setup({
+                ensure_installed = { "lua", "cpp", "go", "python", "rust" }, -- 你的语言列表
+                highlight = { enable = true },
                 indent = { enable = true },
-                fold = { enable = true },
-            }
-            vim.o.foldmethod = "expr"
-            vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+                -- 不再在此处配置 context_commentstring
+            })
         end,
+        dependencies = {
+            {
+                "JoosepAlviste/nvim-ts-context-commentstring",
+                config = function()
+                    require("ts_context_commentstring").setup({
+                        enable_autocmd = false, -- 推荐与 treesitter 配合关闭自动命令
+                        languages = {
+                            typescript = "// %s",
+                            css = "/* %s */",
+                            scss = "// %s"
+                        }
+                    })
+                end
+            }
+        }
     },
     -- leetcode
     {
         "kawre/leetcode.nvim",
-        build = ":TSUpdate html", -- if you have `nvim-treesitter` installed
+        build = ":TSInstall html", -- if you have `nvim-treesitter` installed
         dependencies = {
             "nvim-telescope/telescope.nvim",
             -- "ibhagwan/fzf-lua",
@@ -55,7 +58,7 @@ require('lazy').setup({
             "MunifTanjim/nui.nvim",
         },
         opts = {
-            cn = {     -- leetcode.cn
+            cn = { -- leetcode.cn
                 enabled = true, ---@type boolean
                 translator = true, ---@type boolean
                 translate_problems = true, ---@type boolean
@@ -92,7 +95,7 @@ require('lazy').setup({
         "iamcco/markdown-preview.nvim",
         cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
         ft = { "markdown" },
-        build = function() vim.fn["mkdp#util#install"]() end,
+        build = ":call mkdp#util#install()"
     },
 
     -- FILE tree
@@ -271,3 +274,4 @@ require('lazy').setup({
         end
     },
 })
+
