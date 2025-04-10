@@ -88,3 +88,40 @@ vim.keymap.set('n', '<leader>gb', '<Cmd>lua vim.lsp.buf.declaration()<CR>', { bu
 -- 查看引用
 vim.keymap.set('n', '<leader>gr', '<Cmd>lua vim.lsp.buf.references()<CR>', { buffer = true })  
 
+
+-- telescope
+vim.keymap.set("n", "<leader>fs", ":Telescope find_files<cr>")
+vim.keymap.set("n", "<leader>fp", ":Telescope git_files<cr>")
+vim.keymap.set("n", "<leader>fz", ":Telescope live_grep<cr>")
+vim.keymap.set("n", "<leader>fo", ":Telescope oldfiles<cr>")
+vim.keymap.set("n", "<leader>fb", ":Telescope buffers<cr>")
+vim.keymap.set("n", "<leader>fh", ":Telescope help_tags<cr>")
+
+-- tree
+vim.keymap.set("n", "<leader>e", ":NvimTreeFindFileToggle<cr>")
+
+-- nvim-comment
+vim.keymap.set({"n", "v"}, "<leader>/", ":CommentToggle<cr>")
+
+-- format code using LSP
+vim.keymap.set("n", "<leader>fmd", vim.lsp.buf.format)
+
+-- markdown preview
+vim.keymap.set("n", "<leader>mp", ":MarkdownPreviewToggle<cr>")
+
+vim.keymap.set('n', '<leader>ts', '<cmd>Telescope treesitter parsers<CR>')
+
+-- 查看文档（hover）
+vim.keymap.set({'v', 'n'}, 'K', function ()
+  vim.lsp.buf.hover()
+end)
+-- 函数签名（signature help）
+vim.keymap.set({'v', 'n'}, 'gK', function ()
+  vim.lsp.buf.signature_help()
+end)
+-- 查找定义（使用 Telescope）
+vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", { desc = 'Goto definition' })
+-- 查找声明（内建）
+vim.keymap.set("n", "gD", function()
+    vim.lsp.buf.declaration()
+end, { desc = 'Goto declaration' })
