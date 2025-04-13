@@ -38,36 +38,6 @@ vim.keymap.set("n", "<leader>q", ":bd!<CR>", { noremap = true, silent = true })
 
 local opts = { noremap = true, silent = true }
 
--- Leader + ' 绑定为 :Leet run
-vim.keymap.set("n", "<Leader>'", ":Leet run<CR>", opts)
-
--- Leader + Enter 绑定为 :Leet submit
-vim.keymap.set("n", "<Leader><CR>", ":Leet submit<CR>", opts)
-
--- ✅ 普通/可视模式下 Ctrl+C 复制到系统剪贴板
-vim.keymap.set({ "n", "v" }, "<C-c>", "\"+y", {
-  silent = true,
-  desc = "Copy to system clipboard (Ctrl+C in normal/visual)"
-})
-
--- ✅ 插入模式下 Ctrl+C：复制当前行到剪贴板（退出→复制→返回）
-vim.keymap.set("i", "<C-c>", "<Esc>\"+yya", {
-  silent = true,
-  desc = "Copy current line (Ctrl+C in insert)"
-})
-
--- ✅ 普通/可视模式下 Ctrl+V 粘贴剪贴板内容
-vim.keymap.set({ "n", "v" }, "<C-v>", "\"+p", {
-  silent = true,
-  desc = "Paste from system clipboard (Ctrl+V in normal/visual)"
-})
-
--- ✅ 插入模式下 Ctrl+V 粘贴剪贴板内容
-vim.keymap.set("i", "<C-v>", "<C-r>+", {
-  silent = true,
-  desc = "Paste from system clipboard (Ctrl+V in insert)"
-})
-
 
 -- 悬浮查看文档
 vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { desc = "Hover Doc" })
@@ -98,7 +68,7 @@ vim.keymap.set("n", "<leader>fb", ":Telescope buffers<cr>")
 vim.keymap.set("n", "<leader>fh", ":Telescope help_tags<cr>")
 
 -- tree
-vim.keymap.set("n", "<leader>e", ":NvimTreeFindFileToggle<cr>")
+vim.keymap.set("n", "<leader>e", ":Neotree toggle<cr>")
 
 -- nvim-comment
 vim.keymap.set({"n", "v"}, "<leader>/", ":CommentToggle<cr>")
@@ -111,10 +81,11 @@ vim.keymap.set("n", "<leader>mp", ":MarkdownPreviewToggle<cr>")
 
 vim.keymap.set('n', '<leader>ts', '<cmd>Telescope treesitter parsers<CR>')
 
--- 查看文档（hover）
-vim.keymap.set({'v', 'n'}, 'K', function ()
-  vim.lsp.buf.hover()
-end)
+-- Peek 定义
+vim.keymap.set("n", "gp", "<cmd>Lspsaga peek_definition<CR>", { desc = "Peek definition" })
+
+-- Hover 文档（替代原生 hover）
+vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { desc = "Hover doc" })
 -- 函数签名（signature help）
 vim.keymap.set({'v', 'n'}, 'gK', function ()
   vim.lsp.buf.signature_help()
@@ -125,3 +96,6 @@ vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", { desc = 'Goto d
 vim.keymap.set("n", "gD", function()
     vim.lsp.buf.declaration()
 end, { desc = 'Goto declaration' })
+
+-- 重命名（弹窗输入）
+vim.keymap.set("n", "gn", "<cmd>Lspsaga rename<CR>", { desc = "Rename symbol" })
